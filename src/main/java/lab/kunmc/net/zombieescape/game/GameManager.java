@@ -3,6 +3,7 @@ package lab.kunmc.net.zombieescape.game;
 import dev.kotx.flylib.command.CommandContext;
 import lab.kunmc.net.zombieescape.Util;
 import lab.kunmc.net.zombieescape.ZombieEscape;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
@@ -48,6 +49,7 @@ public class GameManager {
     }
 
     game = new Game(humanTeam, zombieTeam);
+    Bukkit.getServer().getPluginManager().registerEvents(game, ZombieEscape.plugin);
 
     ctx.success("ゲームを開始します");
   }

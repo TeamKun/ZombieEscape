@@ -3,12 +3,10 @@ package lab.kunmc.net.zombieescape.game;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
-public class ZombieTeam {
-
-  private Team team;
+public class ZombieTeam extends BaasTeam {
 
   public ZombieTeam(Team team) {
-    this.team = team;
+    super(team);
   }
 
   void add(Player player) {

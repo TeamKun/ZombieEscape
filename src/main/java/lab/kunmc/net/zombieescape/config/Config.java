@@ -15,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 public class Config extends BaseConfig {
 
   public BlockDataValue surviveBlock = new BlockDataValue(Material.EMERALD_BLOCK.createBlockData());
-  public StringValue humanTeam = new StringValue(null);
-  public StringValue zombieTeam = new StringValue(null);
+  public StringValue humanTeam = new StringValue("red");
+  public StringValue zombieTeam = new StringValue("blue");
 
   public Config(@NotNull Plugin plugin) {
     super(plugin, "config");
