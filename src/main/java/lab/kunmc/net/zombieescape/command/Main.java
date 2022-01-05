@@ -8,6 +8,6 @@ public class Main extends Command {
 
   public Main(@NotNull String name, ConfigCommand configCommand) {
     super(name);
-    children(new Start("start"), new Stop("stop"), configCommand);
+    children(new Start("start"), new Stop("stop"), new ClearSkin("clearskin"), configCommand);
   }
 }

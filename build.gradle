@@ -23,6 +23,10 @@ repositories {
     maven {
         url = "https://repo.dmulloy2.net/repository/public/"
     }
+    maven {
+        name = 'public'
+        url = "https://haoshoku.xyz:1234/repository/public/"
+    }
     maven { url 'https://jitpack.io' }
 }
 
@@ -30,8 +34,10 @@ dependencies {
     compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
     compileOnly fileTree(dir: "./server/cache/", include: "patched_1.16.5.jar")
     compileOnly "com.comphenix.protocol:ProtocolLib:4.7.0"
-    implementation "dev.kotx:flylib-reloaded:0.4.1"
+    implementation 'dev.kotx:flylib-reloaded:0.4.1'
     implementation 'com.github.TeamKun:ConfigLib:0.3.8'
+    compileOnly "xyz.haoshoku.nick:nickapi:6.3.3-SNAPSHOT"
+
 }
 
 shadowJar {

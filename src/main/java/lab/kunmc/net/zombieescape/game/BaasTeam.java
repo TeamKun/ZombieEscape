@@ -14,4 +14,6 @@ public abstract class BaasTeam {
   public boolean hasPlayer(Player player) {
     return this.team.hasEntry(player.getName());
   }
+
+  abstract void init();
 }

@@ -2,6 +2,7 @@ package lab.kunmc.net.zombieescape;
 
 import dev.kotx.flylib.FlyLib;
 import lab.kunmc.net.zombieescape.command.Main;
+import lab.kunmc.net.zombieescape.command.ZEEscape;
 import lab.kunmc.net.zombieescape.config.Config;
 import net.kunmc.lab.configlib.command.ConfigCommand;
 import net.kunmc.lab.configlib.command.ConfigCommandBuilder;
@@ -25,11 +26,7 @@ public final class ZombieEscape extends JavaPlugin {
 
     FlyLib.create(this, builder -> {
       builder.command(new Main("ze", configCommand));
+      builder.command(new ZEEscape("zescape"));
     });
-  }
-
-  @Override
-  public void onDisable() {
-    // Plugin shutdown logic
   }
 }

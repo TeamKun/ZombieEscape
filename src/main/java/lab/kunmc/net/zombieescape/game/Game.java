@@ -4,9 +4,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
-public class Game implements Listener {
+public class Game extends BukkitRunnable implements Listener {
 
   private HumanTeam humanTeam;
   private ZombieTeam zombieTeam;
@@ -16,10 +17,13 @@ public class Game implements Listener {
     this.zombieTeam = new ZombieTeam(zombieTeam);
   }
 
-  void addZombie(Player player) {
-    this.zombieTeam.add(player);
+  void escape(Player sender) {
+    if (!this.humanTeam.hasPlayer(sender)) {
+      return;
+    }
+    this.humanTeam.escape();
+    this.zombieTeam.killAll();
   }
-
 
   @EventHandler(ignoreCancelled = true)
   public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
@@ -33,6 +37,16 @@ public class Game implements Listener {
       return;
     }
 
+    // 人間が死亡
     this.zombieTeam.add(player);
+  }
+
+  @Override
+  public void run() {
+    if (this.humanTeam.isEradication()) {
+      // ゲーム終了
+      GameManager.eradicationEnd();
+
+    }
   }
 }

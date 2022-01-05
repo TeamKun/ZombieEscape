@@ -11,6 +11,9 @@ public class GameManager {
 
   private static Game game;
 
+  /**
+   * ゲーム開始
+   */
   public static void start(CommandContext ctx) {
     String humanTeamName = ZombieEscape.config.humanTeam.value();
     String zombieTeamName = ZombieEscape.config.zombieTeam.value();
@@ -50,21 +53,37 @@ public class GameManager {
 
     game = new Game(humanTeam, zombieTeam);
     Bukkit.getServer().getPluginManager().registerEvents(game, ZombieEscape.plugin);
-
+    game.runTaskTimerAsynchronously(ZombieEscape.plugin, 0, 0);
+    Util.clearSkin();
     ctx.success("ゲームを開始します");
   }
 
+  /**
+   * ゲーム終了
+   */
   public static void stop(CommandContext ctx) {
     if (game == null) {
       ctx.fail("ゲーム実行中ではありません");
       return;
     }
 
+    game.cancel();
     game = null;
     ctx.success("ゲームを終了します");
   }
 
-  static void addZombie(Player player) {
-    game.addZombie(player);
+  static void eradicationEnd() {
+    game.cancel();
+    game = null;
+    Util.sendTitleAll("全滅した", null, 20, 60, 20);
+  }
+
+  public static void escape(CommandContext ctx) {
+    Player sender = Bukkit.getPlayer(ctx.getArgs().get(0));
+    if (sender == null) {
+      return;
+    }
+    game.escape(sender);
+    game = null;
   }
 }

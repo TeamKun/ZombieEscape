@@ -1,10 +1,10 @@
 package lab.kunmc.net.zombieescape.config;
 
-import dev.kotx.flylib.command.UsageBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import net.kunmc.lab.configlib.config.BaseConfig;
 import net.kunmc.lab.configlib.value.BlockDataValue;
+import net.kunmc.lab.configlib.value.BooleanValue;
 import net.kunmc.lab.configlib.value.StringValue;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,6 +17,8 @@ public class Config extends BaseConfig {
   public BlockDataValue surviveBlock = new BlockDataValue(Material.EMERALD_BLOCK.createBlockData());
   public StringValue humanTeam = new StringValue("red");
   public StringValue zombieTeam = new StringValue("blue");
+  public StringValue toSkinPlayerName = new StringValue("");
+  public BooleanValue isSkinChange = new BooleanValue(true);
 
   public Config(@NotNull Plugin plugin) {
     super(plugin, "config");
@@ -25,8 +27,5 @@ public class Config extends BaseConfig {
     for (Team team : Bukkit.getScoreboardManager().getMainScoreboard().getTeams()) {
       teams.add(team.getName());
     }
-
-    humanTeam.appendArgument(new UsageBuilder().selectionArgument("team", teams));
-    zombieTeam.appendArgument(new UsageBuilder().selectionArgument("team", teams));
   }
 }
