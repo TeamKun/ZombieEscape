@@ -37,11 +37,11 @@ public class HumanTeam extends BaasTeam {
     }
   }
 
-  void escape() {
+  List<Player> escape() {
     List<Player> survivors = new ArrayList<>();
     for (OfflinePlayer offlinePlayer : this.team.getPlayers()) {
       if (!offlinePlayer.isOnline()) {
-        return;
+        continue;
       }
 
       Player player = offlinePlayer.getPlayer();
@@ -51,6 +51,7 @@ public class HumanTeam extends BaasTeam {
 
       survivors.add(player);
     }
+    return survivors;
   }
 
   private boolean isSuccessfulEscape(Player player) {

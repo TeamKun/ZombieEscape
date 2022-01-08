@@ -1,5 +1,7 @@
 package lab.kunmc.net.zombieescape.game;
 
+import java.util.List;
+import lab.kunmc.net.zombieescape.Util;
 import lab.kunmc.net.zombieescape.ZombieEscape;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,8 +25,20 @@ public class Game extends BukkitRunnable implements Listener {
     if (!this.humanTeam.hasPlayer(sender)) {
       return;
     }
-    this.humanTeam.escape();
+    List<Player> survivors = this.humanTeam.escape();
     this.zombieTeam.killAll();
+
+    if (survivors.size() == 0) {
+      Util.sendTitleAll("全滅した", null, 20, 100, 20);
+    } else {
+      Util.sendTitleAll("脱出成功!", "生存者" + survivors.size() + "人", 20, 100, 20);
+
+      Util.broadcast("========生存者一覧========");
+      for (Player survivor : survivors) {
+        Util.broadcast(survivor.getName());
+      }
+      Util.broadcast("=======================");
+    }
   }
 
   @EventHandler(ignoreCancelled = true)

@@ -1,6 +1,7 @@
 package lab.kunmc.net.zombieescape.game;
 
 import dev.kotx.flylib.command.CommandContext;
+import java.util.List;
 import lab.kunmc.net.zombieescape.Util;
 import lab.kunmc.net.zombieescape.ZombieEscape;
 import org.bukkit.Bukkit;
@@ -76,15 +77,20 @@ public class GameManager {
   static void eradicationEnd() {
     game.cancel();
     game = null;
-    Util.sendTitleAll("全滅した", null, 20, 60, 20);
+    Util.sendTitleAll("全滅した", null, 20, 100, 20);
   }
 
   public static void escape(CommandContext ctx) {
-    Player sender = Bukkit.getPlayer(ctx.getArgs().get(0));
-    if (sender == null) {
+    if (game == null) {
       return;
     }
-    game.escape(sender);
-    game = null;
+    for (Object arg : ((List) ctx.getTypedArgs().get(0))) {
+      if (arg instanceof Player) {
+        Player sender = (Player) arg;
+        Util.log(sender.getName());
+        game.escape(sender);
+        game = null;
+      }
+    }
   }
 }
