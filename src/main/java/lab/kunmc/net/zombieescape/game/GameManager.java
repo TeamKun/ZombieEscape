@@ -51,10 +51,11 @@ public class GameManager {
       return;
     }
 
+    Util.clearSkin();
     game = new Game(humanTeam, zombieTeam);
     Bukkit.getServer().getPluginManager().registerEvents(game, ZombieEscape.plugin);
     game.runTaskTimerAsynchronously(ZombieEscape.plugin, 0, 0);
-    Util.clearSkin();
+
     ctx.success("ゲームを開始します");
   }
 
@@ -66,7 +67,7 @@ public class GameManager {
       ctx.fail("ゲーム実行中ではありません");
       return;
     }
-
+    Util.clearSkin();
     game.cancel();
     game = null;
     ctx.success("ゲームを終了します");

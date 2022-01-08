@@ -1,5 +1,6 @@
 package lab.kunmc.net.zombieescape.game;
 
+import lab.kunmc.net.zombieescape.ZombieEscape;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
@@ -17,12 +18,12 @@ public class ZombieTeam extends BaasTeam {
         continue;
       }
       Player player = (Player) offlinePlayer;
-      Logic.changeZombieSkin(player);
+      this.settingState(player);
     }
   }
 
   void add(Player player) {
-    settingZombieState(player);
+    settingState(player);
     this.team.addEntry(player.getName());
   }
 
@@ -34,7 +35,10 @@ public class ZombieTeam extends BaasTeam {
     }
   }
 
-  private void settingZombieState(Player player) {
+  private void settingState(Player player) {
     Logic.changeZombieSkin(player);
+    if (ZombieEscape.config.isHumanGlowing.value()) {
+      player.setGlowing(true);
+    }
   }
 }

@@ -1,9 +1,11 @@
 package lab.kunmc.net.zombieescape.game;
 
+import lab.kunmc.net.zombieescape.ZombieEscape;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
@@ -23,6 +25,21 @@ public class Game extends BukkitRunnable implements Listener {
     }
     this.humanTeam.escape();
     this.zombieTeam.killAll();
+  }
+
+  @EventHandler(ignoreCancelled = true)
+  public void onPlayerJoin(PlayerJoinEvent event) {
+    Player player = event.getPlayer();
+
+    if (this.humanTeam.hasPlayer(player)) {
+      player.setGlowing(ZombieEscape.config.isHumanGlowing.value());
+      return;
+    }
+
+    if (this.zombieTeam.hasPlayer(player)) {
+      player.setGlowing(ZombieEscape.config.isZombieGlowing.value());
+      return;
+    }
   }
 
   @EventHandler(ignoreCancelled = true)

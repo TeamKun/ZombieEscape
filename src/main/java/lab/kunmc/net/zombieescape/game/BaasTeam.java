@@ -9,6 +9,7 @@ public abstract class BaasTeam {
 
   public BaasTeam(Team team) {
     this.team = team;
+    this.init();
   }
 
   public boolean hasPlayer(Player player) {

@@ -2,7 +2,6 @@ package lab.kunmc.net.zombieescape.game;
 
 import java.util.ArrayList;
 import java.util.List;
-import lab.kunmc.net.zombieescape.Util;
 import lab.kunmc.net.zombieescape.ZombieEscape;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,10 +19,22 @@ public class HumanTeam extends BaasTeam {
   boolean isEradication() {
     return this.team.getSize() == 0;
   }
-  
+
   @Override
   void init() {
+    for (OfflinePlayer offlinePlayer : this.team.getPlayers()) {
+      if (!offlinePlayer.isOnline()) {
+        continue;
+      }
+      Player player = (Player) offlinePlayer;
+      this.settingState(player);
+    }
+  }
 
+  private void settingState(Player player) {
+    if (ZombieEscape.config.isHumanGlowing.value()) {
+      player.setGlowing(true);
+    }
   }
 
   void escape() {
@@ -50,7 +61,6 @@ public class HumanTeam extends BaasTeam {
 
       // 生存成功
       if (block.getBlockData().equals(ZombieEscape.config.surviveBlock.value())) {
-        Util.log(player.getName());
         return true;
       }
 

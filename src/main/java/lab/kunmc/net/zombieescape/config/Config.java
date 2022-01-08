@@ -15,10 +15,12 @@ import org.jetbrains.annotations.NotNull;
 public class Config extends BaseConfig {
 
   public BlockDataValue surviveBlock = new BlockDataValue(Material.EMERALD_BLOCK.createBlockData());
-  public StringValue humanTeam = new StringValue("red");
-  public StringValue zombieTeam = new StringValue("blue");
+  public StringValue humanTeam = new StringValue("human");
+  public StringValue zombieTeam = new StringValue("zombie");
   public StringValue toSkinPlayerName = new StringValue("");
   public BooleanValue isSkinChange = new BooleanValue(true);
+  public BooleanValue isHumanGlowing = new BooleanValue(false);
+  public BooleanValue isZombieGlowing = new BooleanValue(true);
 
   public Config(@NotNull Plugin plugin) {
     super(plugin, "config");
