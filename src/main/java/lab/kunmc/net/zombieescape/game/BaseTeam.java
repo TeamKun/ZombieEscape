@@ -3,11 +3,11 @@ package lab.kunmc.net.zombieescape.game;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
-public abstract class BaasTeam {
+public abstract class BaseTeam {
 
   protected Team team;
 
-  public BaasTeam(Team team) {
+  public BaseTeam(Team team) {
     this.team = team;
     this.init();
   }

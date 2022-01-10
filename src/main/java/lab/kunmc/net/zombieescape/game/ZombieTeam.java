@@ -5,7 +5,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
-public class ZombieTeam extends BaasTeam {
+public class ZombieTeam extends BaseTeam {
 
   public ZombieTeam(Team team) {
     super(team);

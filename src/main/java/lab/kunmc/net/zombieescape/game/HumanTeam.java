@@ -10,7 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
-public class HumanTeam extends BaasTeam {
+public class HumanTeam extends BaseTeam {
 
   public HumanTeam(Team team) {
     super(team);
