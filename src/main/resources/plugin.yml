@@ -1,5 +1,5 @@
 name: ZombieEscape
-version: '${version}'
+version: @version@
 main: lab.kunmc.net.zombieescape.ZombieEscape
 api-version: 1.16
 depend: [ NickAPI ]

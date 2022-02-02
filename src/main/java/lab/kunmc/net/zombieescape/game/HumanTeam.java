@@ -3,6 +3,8 @@ package lab.kunmc.net.zombieescape.game;
 import java.util.ArrayList;
 import java.util.List;
 import lab.kunmc.net.zombieescape.ZombieEscape;
+import lab.kunmc.net.zombieescape.config.Config;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -28,6 +30,13 @@ public class HumanTeam extends BaseTeam {
       }
       Player player = (Player) offlinePlayer;
       this.settingState(player);
+
+      // アイテム配布
+      Config config = ZombieEscape.config;
+      for (String gun : config.initialGuns) {
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+            "qa give " + gun + " " + player.getName());
+      }
     }
   }
 

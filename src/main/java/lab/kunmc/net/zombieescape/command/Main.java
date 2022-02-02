@@ -1,7 +1,7 @@
 package lab.kunmc.net.zombieescape.command;
 
 import dev.kotx.flylib.command.Command;
-import net.kunmc.lab.configlib.command.ConfigCommand;
+import net.kunmc.lab.configlib.ConfigCommand;
 import org.jetbrains.annotations.NotNull;
 
 public class Main extends Command {

@@ -1,8 +1,11 @@
 package lab.kunmc.net.zombieescape.game;
 
 import lab.kunmc.net.zombieescape.ZombieEscape;
+import lab.kunmc.net.zombieescape.config.Config;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 
 public class ZombieTeam extends BaseTeam {
@@ -37,8 +40,17 @@ public class ZombieTeam extends BaseTeam {
 
   private void settingState(Player player) {
     Logic.changeZombieSkin(player);
-    if (ZombieEscape.config.isHumanGlowing.value()) {
+    Config config = ZombieEscape.config;
+    if (config.isZombieGlowing.value()) {
       player.setGlowing(true);
     }
+
+    player.getInventory().clear();
+    player.setMaxHealth(config.zombieHealth.value());
+    player.setHealth(config.zombieHealth.value());
+    player.addPotionEffect(
+        new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,
+            Integer.MAX_VALUE,
+            config.zombieResistanceLevel.value()));
   }
 }

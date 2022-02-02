@@ -9,49 +9,38 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
 public class GameManager {
-
   private static Game game;
 
   /**
    * ゲーム開始
    */
   public static void start(CommandContext ctx) {
-    String humanTeamName = ZombieEscape.config.humanTeam.value();
-    String zombieTeamName = ZombieEscape.config.zombieTeam.value();
+    Team humanTeam = ZombieEscape.config.humanTeam.value();
+    Team zombieTeam = ZombieEscape.config.zombieTeam.value();
 
     if (game != null) {
       ctx.fail("すでにゲーム実行中です");
       return;
     }
 
-    if (humanTeamName == null) {
+    if (humanTeam == null) {
       ctx.fail("人間チームがセットされていません");
       return;
     }
 
-    if (zombieTeamName == null) {
+    if (zombieTeam == null) {
       ctx.fail("ゾンビチームがセットされていません");
       return;
     }
 
-    if (humanTeamName.equals(zombieTeamName)) {
+    if (humanTeam.equals(zombieTeam)) {
       ctx.fail("人間チームとゾンビチームに同じチームがセットされています");
       return;
     }
 
-    Team humanTeam = Util.getTeam(humanTeamName);
-    Team zombieTeam = Util.getTeam(zombieTeamName);
-
-    if (humanTeam == null) {
-      ctx.fail(humanTeamName + "チームは存在しません");
-      return;
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      Logic.clearPlayerState(player);
     }
-
-    if (zombieTeam == null) {
-      ctx.fail(zombieTeamName + "チームは存在しません");
-      return;
-    }
-
     Util.clearSkin();
     game = new Game(humanTeam, zombieTeam);
     Bukkit.getServer().getPluginManager().registerEvents(game, ZombieEscape.plugin);
@@ -69,15 +58,24 @@ public class GameManager {
       return;
     }
     Util.clearSkin();
+    resetPlayerState();
     game.cancel();
     game = null;
     ctx.success("ゲームを終了します");
   }
 
   static void eradicationEnd() {
+    resetPlayerState();
     game.cancel();
     game = null;
-    Util.sendTitleAll("全滅した", null, 20, 100, 20);
+    Util.sendTitleAll("生存者が全滅した", null, 20, 100, 20);
+  }
+
+  private static void resetPlayerState() {
+    Util.clearGlowing();
+    Util.clearEffect();
+    Util.resetHealth();
+    Util.clearInventory();
   }
 
   public static void escape(CommandContext ctx) {

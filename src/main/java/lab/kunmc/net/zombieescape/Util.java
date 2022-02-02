@@ -4,6 +4,8 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 import xyz.haoshoku.nick.api.NickAPI;
 
@@ -49,8 +51,8 @@ public class Util {
   /**
    * スキンを変更する
    */
-  public static void changeSkin(Player player, String toSkinPlayerName) {
-    NickAPI.setSkin(player, toSkinPlayerName);
+  public static void changeSkin(Player player, String playerName) {
+    NickAPI.setSkin(player, playerName);
     NickAPI.refreshPlayer(player);
   }
 
@@ -66,4 +68,46 @@ public class Util {
       }
     }
   }
+
+  /**
+   * 全員の発光を止める
+   */
+  public static void clearGlowing() {
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      player.setGlowing(false);
+    }
+  }
+
+  /**
+   * 全員の耐久エフェクトを解除する
+   */
+  public static void clearEffect() {
+    new BukkitRunnable() {
+      @Override
+      public void run() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+          player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+        }
+      }
+    }.runTask(ZombieEscape.plugin);
+  }
+
+  /**
+   * 全員の体力をもとに戻す
+   */
+  public static void resetHealth() {
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      player.setMaxHealth(20);
+    }
+  }
+
+  /**
+   * 全員のアイテムをクリア
+   */
+  public static void clearInventory() {
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      player.getInventory().clear();
+    }
+  }
+
 }

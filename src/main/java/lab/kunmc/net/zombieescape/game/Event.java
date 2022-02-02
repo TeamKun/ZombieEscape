@@ -1,4 +1,4 @@
-package lab.kunmc.net.zombieescape;
+package lab.kunmc.net.zombieescape.game;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,6 +8,6 @@ public class Event implements Listener {
 
   @EventHandler(ignoreCancelled = true)
   public void onPlayerQuit(PlayerQuitEvent event) {
-    event.getPlayer().setGlowing(false);
+    Logic.clearPlayerState(event.getPlayer());
   }
 }

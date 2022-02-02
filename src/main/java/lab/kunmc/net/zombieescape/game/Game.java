@@ -77,7 +77,6 @@ public class Game extends BukkitRunnable implements Listener {
     if (this.humanTeam.isEradication()) {
       // ゲーム終了
       GameManager.eradicationEnd();
-
     }
   }
 }
