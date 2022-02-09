@@ -24,6 +24,7 @@ public class Config extends BaseConfig {
   public IntegerValue zombieHealth = new IntegerValue(100);
   public StringListValue initialGuns = new StringListValue();
   public IntegerValue escapeWaitingTime = new IntegerValue(30);
+  public BooleanValue allowButtonPressZombie = new BooleanValue(true);
 
   public Config(@NotNull Plugin plugin, List<String> weaponNameList) {
     super(plugin);

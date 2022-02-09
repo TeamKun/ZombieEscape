@@ -26,9 +26,24 @@ public class Game extends BukkitRunnable implements Listener {
     this.zombieTeam = new ZombieTeam(zombieTeam);
   }
 
-  void escape(Player sender) {
+  boolean escape(Player sender) {
     if (!this.humanTeam.hasPlayer(sender)) {
-      return;
+      if (!ZombieEscape.config.allowButtonPressZombie.value()) {
+        return false;
+      }
+
+      // ゾンビによるボタン押下
+      for (Player player : this.humanTeam.playerList()) {
+        this.zombieTeam.add(player);
+      }
+      Util.sendTitleAll("生存者が全滅した", null, 20, 100, 20);
+
+      GameManager.game = null;
+      return true;
+    }
+
+    if (isTimerRunning()) {
+      return false;
     }
 
     this.escapeTimer = new BukkitRunnable() {
@@ -47,7 +62,7 @@ public class Game extends BukkitRunnable implements Listener {
           zombieTeam.killAll();
 
           if (survivors.size() == 0) {
-            Util.sendTitleAll("全滅した", null, 20, 100, 20);
+            Util.sendTitleAll("生存者が全滅した", null, 20, 100, 20);
           } else {
             Util.sendTitleAll("脱出成功!", "生存者" + survivors.size() + "人", 20, 100, 20);
 
@@ -62,7 +77,7 @@ public class Game extends BukkitRunnable implements Listener {
         }
       }
     }.runTaskTimerAsynchronously(ZombieEscape.plugin, 0, 20);
-
+    return true;
   }
 
   @EventHandler(ignoreCancelled = true)

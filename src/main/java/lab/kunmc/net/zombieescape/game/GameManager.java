@@ -67,6 +67,7 @@ public class GameManager {
 
   static void eradicationEnd() {
     resetPlayerState();
+    game.stopTimer();
     game.cancel();
     game = null;
     Util.sendTitleAll("生存者が全滅した", null, 20, 100, 20);
@@ -87,7 +88,9 @@ public class GameManager {
       if (arg instanceof Player) {
         Player sender = (Player) arg;
         Util.log(sender.getName());
-        game.escape(sender);
+        if (!game.escape(sender)) {
+          return;
+        }
 
         if (!game.isTimerRunning()) {
           game.cancel();
