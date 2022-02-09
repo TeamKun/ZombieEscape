@@ -58,6 +58,7 @@ public class HumanTeam extends BaseTeam {
       Player player = offlinePlayer.getPlayer();
       if (!isSuccessfulEscape(player)) {
         player.damage(10000);
+        continue;
       }
 
       survivors.add(player);
