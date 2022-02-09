@@ -110,4 +110,12 @@ public class Util {
     }
   }
 
+  public static void killSync(Player player) {
+    new BukkitRunnable() {
+      @Override
+      public void run() {
+        player.damage(1000);
+      }
+    }.runTask(ZombieEscape.plugin);
+  }
 }

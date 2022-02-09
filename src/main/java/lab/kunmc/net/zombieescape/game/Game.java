@@ -3,6 +3,8 @@ package lab.kunmc.net.zombieescape.game;
 import java.util.List;
 import lab.kunmc.net.zombieescape.Util;
 import lab.kunmc.net.zombieescape.ZombieEscape;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,20 +27,39 @@ public class Game extends BukkitRunnable implements Listener {
     if (!this.humanTeam.hasPlayer(sender)) {
       return;
     }
-    List<Player> survivors = this.humanTeam.escape();
-    this.zombieTeam.killAll();
 
-    if (survivors.size() == 0) {
-      Util.sendTitleAll("全滅した", null, 20, 100, 20);
-    } else {
-      Util.sendTitleAll("脱出成功!", "生存者" + survivors.size() + "人", 20, 100, 20);
+    new BukkitRunnable() {
+      private int remainingTime = 30;
 
-      Util.broadcast("========生存者一覧========");
-      for (Player survivor : survivors) {
-        Util.broadcast(survivor.getName());
+      @Override
+      public void run() {
+        // 秒数表示
+        for (Player player : Bukkit.getOnlinePlayers()) {
+          player.sendActionBar(Component.text("脱出まで残り" + remainingTime + "秒"));
+        }
+
+        remainingTime--;
+        if (remainingTime < 0) {
+          List<Player> survivors = humanTeam.escape();
+          zombieTeam.killAll();
+
+          if (survivors.size() == 0) {
+            Util.sendTitleAll("全滅した", null, 20, 100, 20);
+          } else {
+            Util.sendTitleAll("脱出成功!", "生存者" + survivors.size() + "人", 20, 100, 20);
+
+            Util.broadcast("========生存者一覧========");
+            for (Player survivor : survivors) {
+              Util.broadcast(survivor.getName());
+            }
+            Util.broadcast("=======================");
+          }
+
+          this.cancel();
+        }
       }
-      Util.broadcast("=======================");
-    }
+    }.runTaskTimerAsynchronously(ZombieEscape.plugin, 0, 20);
+
   }
 
   @EventHandler(ignoreCancelled = true)

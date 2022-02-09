@@ -2,6 +2,7 @@ package lab.kunmc.net.zombieescape.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import lab.kunmc.net.zombieescape.Util;
 import lab.kunmc.net.zombieescape.ZombieEscape;
 import lab.kunmc.net.zombieescape.config.Config;
 import org.bukkit.Bukkit;
@@ -57,7 +58,7 @@ public class HumanTeam extends BaseTeam {
 
       Player player = offlinePlayer.getPlayer();
       if (!isSuccessfulEscape(player)) {
-        player.damage(10000);
+        Util.killSync(player);
         continue;
       }
 

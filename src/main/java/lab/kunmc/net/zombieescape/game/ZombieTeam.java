@@ -1,5 +1,6 @@
 package lab.kunmc.net.zombieescape.game;
 
+import lab.kunmc.net.zombieescape.Util;
 import lab.kunmc.net.zombieescape.ZombieEscape;
 import lab.kunmc.net.zombieescape.config.Config;
 import org.bukkit.GameMode;
@@ -34,7 +35,7 @@ public class ZombieTeam extends BaseTeam {
   void killAll() {
     for (OfflinePlayer player : this.team.getPlayers()) {
       if (player.isOnline()) {
-        ((Player) player).damage(10000);
+        Util.killSync((Player) player);
       }
     }
   }
