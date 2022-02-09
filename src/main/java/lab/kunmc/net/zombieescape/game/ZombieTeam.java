@@ -2,6 +2,7 @@ package lab.kunmc.net.zombieescape.game;
 
 import lab.kunmc.net.zombieescape.ZombieEscape;
 import lab.kunmc.net.zombieescape.config.Config;
+import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -40,6 +41,7 @@ public class ZombieTeam extends BaseTeam {
 
   private void settingState(Player player) {
     Logic.changeZombieSkin(player);
+    player.setGameMode(GameMode.ADVENTURE);
     Config config = ZombieEscape.config;
     if (config.isZombieGlowing.value()) {
       player.setGlowing(true);

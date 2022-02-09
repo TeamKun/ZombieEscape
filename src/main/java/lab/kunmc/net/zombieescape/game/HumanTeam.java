@@ -5,6 +5,7 @@ import java.util.List;
 import lab.kunmc.net.zombieescape.ZombieEscape;
 import lab.kunmc.net.zombieescape.config.Config;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -41,6 +42,7 @@ public class HumanTeam extends BaseTeam {
   }
 
   private void settingState(Player player) {
+    player.setGameMode(GameMode.ADVENTURE);
     if (ZombieEscape.config.isHumanGlowing.value()) {
       player.setGlowing(true);
     }
