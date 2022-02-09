@@ -22,8 +22,8 @@ public class Config extends BaseConfig {
   public BooleanValue isHumanGlowing = new BooleanValue(false);
   public BooleanValue isZombieGlowing = new BooleanValue(true);
   public IntegerValue zombieHealth = new IntegerValue(100);
-  public IntegerValue zombieResistanceLevel = new IntegerValue(255);
   public StringListValue initialGuns = new StringListValue();
+  public IntegerValue escapeWaitingTime = new IntegerValue(30);
 
   public Config(@NotNull Plugin plugin, List<String> weaponNameList) {
     super(plugin);

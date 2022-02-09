@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
 public class GameManager {
-  private static Game game;
+   static Game game;
 
   /**
    * ゲーム開始
@@ -50,7 +50,7 @@ public class GameManager {
   }
 
   /**
-   * ゲーム終了
+   * ゲーム強制終了
    */
   public static void stop(CommandContext ctx) {
     if (game == null) {
@@ -59,6 +59,7 @@ public class GameManager {
     }
     Util.clearSkin();
     resetPlayerState();
+    game.stopTimer();
     game.cancel();
     game = null;
     ctx.success("ゲームを終了します");
@@ -87,7 +88,10 @@ public class GameManager {
         Player sender = (Player) arg;
         Util.log(sender.getName());
         game.escape(sender);
-        game = null;
+
+        if (!game.isTimerRunning()) {
+          game.cancel();
+        }
       }
     }
   }

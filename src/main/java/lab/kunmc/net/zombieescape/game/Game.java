@@ -11,12 +11,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Team;
 
 public class Game extends BukkitRunnable implements Listener {
 
   private HumanTeam humanTeam;
   private ZombieTeam zombieTeam;
+
+  private BukkitTask escapeTimer;
 
   Game(Team humanTeam, Team zombieTeam) {
     this.humanTeam = new HumanTeam(humanTeam);
@@ -28,8 +31,8 @@ public class Game extends BukkitRunnable implements Listener {
       return;
     }
 
-    new BukkitRunnable() {
-      private int remainingTime = 30;
+    this.escapeTimer = new BukkitRunnable() {
+      private int remainingTime = ZombieEscape.config.escapeWaitingTime.value();
 
       @Override
       public void run() {
@@ -54,8 +57,8 @@ public class Game extends BukkitRunnable implements Listener {
             }
             Util.broadcast("=======================");
           }
-
           this.cancel();
+          GameManager.game = null;
         }
       }
     }.runTaskTimerAsynchronously(ZombieEscape.plugin, 0, 20);
@@ -91,6 +94,17 @@ public class Game extends BukkitRunnable implements Listener {
 
     // 人間が死亡
     this.zombieTeam.add(player);
+  }
+
+  void stopTimer() {
+    if (this.isTimerRunning()) {
+      this.escapeTimer.cancel();
+      this.escapeTimer = null;
+    }
+  }
+
+  boolean isTimerRunning() {
+    return this.escapeTimer != null;
   }
 
   @Override

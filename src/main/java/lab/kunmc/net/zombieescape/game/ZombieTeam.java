@@ -6,8 +6,6 @@ import lab.kunmc.net.zombieescape.config.Config;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 
 public class ZombieTeam extends BaseTeam {
@@ -51,9 +49,5 @@ public class ZombieTeam extends BaseTeam {
     player.getInventory().clear();
     player.setMaxHealth(config.zombieHealth.value());
     player.setHealth(config.zombieHealth.value());
-    player.addPotionEffect(
-        new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,
-            Integer.MAX_VALUE,
-            config.zombieResistanceLevel.value()));
   }
 }
