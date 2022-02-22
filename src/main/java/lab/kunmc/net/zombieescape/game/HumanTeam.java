@@ -69,9 +69,8 @@ public class HumanTeam extends BaseTeam {
 
   private boolean isSuccessfulEscape(Player player) {
     Location loc = player.getLocation();
-    int y = -1;
     while (true) {
-      Block block = loc.add(0, y, 0).getBlock();
+      Block block = loc.add(0, -1, 0).getBlock();
 
       // 生存成功
       if (block.getBlockData().equals(ZombieEscape.config.surviveBlock.value())) {
@@ -81,9 +80,9 @@ public class HumanTeam extends BaseTeam {
       // 生存失敗
       if (!block.getBlockData().equals(Material.AIR.createBlockData()) && !block.getBlockData()
           .equals(Material.CAVE_AIR.createBlockData())) {
+        Util.log(block.getType().name());
         return false;
       }
-      y -= 1;
     }
   }
 }
